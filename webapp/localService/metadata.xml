@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://vhigeds4scc:443/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZFI_IMP_DIFERIDO_REP1_SRV" xml:lang="es" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <EntityType Name="ZFI_IMPDIF_REP1" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Pbukrs"/>
+                    <PropertyRef Name="Pryear"/>
+                    <PropertyRef Name="Brldnr"/>
+                    <PropertyRef Name="Prldnr"/>
+                    <PropertyRef Name="Pldgrp"/>
+                    <PropertyRef Name="Pbfrper"/>
+                    <PropertyRef Name="Pbtoper"/>
+                    <PropertyRef Name="Pcini"/>
+                    <PropertyRef Name="Pcfin"/>
+                    <PropertyRef Name="PtarifImp"/>
+                    <PropertyRef Name="Pbudat"/>
+                    <PropertyRef Name="Pfechcontrev"/>
+                    <PropertyRef Name="Preversar"/>
+                    <PropertyRef Name="Pfechjobrev"/>
+                    <PropertyRef Name="Ptest"/>
+                    <PropertyRef Name="CalseCuenta"/>
+                    <PropertyRef Name="GrupoCta"/>
+                    <PropertyRef Name="ClaseCuenta"/>
+                    <PropertyRef Name="Racct"/>
+                    <PropertyRef Name="Txt50"/>
+                    <PropertyRef Name="LedgerBasico"/>
+                    <PropertyRef Name="LedgerComp"/>
+                    <PropertyRef Name="Diferencia"/>
+                    <PropertyRef Name="Rtcur"/>
+                    <PropertyRef Name="Permanente"/>
+                    <PropertyRef Name="Imponible"/>
+                    <PropertyRef Name="Deducible"/>
+                    <PropertyRef Name="ImpDiferido"/>
+                    <PropertyRef Name="TarifaImp"/>
+                    <PropertyRef Name="TipoImp"/>
+                </Key>
+                <Property Name="Pbukrs" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sociedad" sap:creatable="false" sap:sortable="false" sap:value-list="standard"/>
+                <Property Name="Pryear" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Ejercicio" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Brldnr" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Ledger Base" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Prldnr" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Ledger comparación" sap:creatable="false" sap:sortable="false"/>
+                <Property Name="Pldgrp" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Ledger para contabilizar" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Pbfrper" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Mes Inicial" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Pbtoper" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Mes Fin" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Pcini" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cuenta Inicial" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Pcfin" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cuenta Final" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="PtarifImp" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Tarifa Impuesto" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Pbudat" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Fecha contab." sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Pfechcontrev" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Fecha contab." sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Preversar" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Carácter 1" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Pfechjobrev" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Fecha contab." sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Ptest" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Modo test" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="CalseCuenta" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Clase Cuenta" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="GrupoCta" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Significado" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="ClaseCuenta" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Clase Cuenta" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="Racct" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Nº cuenta" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="Txt50" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Texto expl." sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="LedgerBasico" Type="Edm.Decimal" Nullable="false" Precision="24" Scale="3" sap:unicode="false" sap:label="Ledger Basico" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="LedgerComp" Type="Edm.Decimal" Nullable="false" Precision="24" Scale="3" sap:unicode="false" sap:label="Ledger Compartivo" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="Diferencia" Type="Edm.Decimal" Nullable="false" Precision="24" Scale="3" sap:unicode="false" sap:label="Diferencia" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="Rtcur" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Moneda" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="Permanente" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Permanente" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="Imponible" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Imponible" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="Deducible" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Deducible" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="ImpDiferido" Type="Edm.Decimal" Nullable="false" Precision="24" Scale="3" sap:unicode="false" sap:label="Impuesto Diferido" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="TarifaImp" Type="Edm.Decimal" Nullable="false" Precision="6" Scale="2" sap:unicode="false" sap:label="Tarifa Impuesto" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="TipoImp" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Clase Cuenta" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="FisshBukrs" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="BUKRS"/>
+                </Key>
+                <Property Name="BUKRS" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Pbukrs" sap:creatable="false"/>
+                <Property Name="BUTXT" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Nombre soc.GL" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="KOKRS" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sociedad CO" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="KTOPL" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plan cuentas" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ORT01" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Población" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WAERS" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Moneda" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="PERIV" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Var.ejercicio" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="FisshRldnr" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="RLDNR"/>
+                </Key>
+                <Property Name="RLDNR" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Ledger" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NAME" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Nombre ledger" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="XLEADING" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Ledger principal" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Cuentas" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Bukrs"/>
+                    <PropertyRef Name="Ktopl"/>
+                    <PropertyRef Name="Saknr"/>
+                </Key>
+                <Property Name="Bukrs" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sociedad"/>
+                <Property Name="Ktopl" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plan de cuentas"/>
+                <Property Name="Saknr" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cuenta de mayor"/>
+                <Property Name="Txt50" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Texto explicativo"/>
+            </EntityType>
+            <EntityType Name="Mes" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CALMONTH2"/>
+                </Key>
+                <Property Name="CALMONTH2" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Mes natural" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TXTMD" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Descripción media" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TXTLG" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Descripción larga" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityContainer Name="ZFI_IMP_DIFERIDO_REP1_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ZFI_IMPDIF_REP1Set" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FisshBukrsSet" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.FisshBukrs" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FisshRldnrSet" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.FisshRldnr" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CuentasSet" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.Cuentas" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="MesSet" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.Mes" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Clase Cuenta"/>
+                            <PropertyValue Property="Value" Path="CalseCuenta"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Grupo de Cuenta"/>
+                            <PropertyValue Property="Value" Path="GrupoCta"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Sort Tipo Imp"/>
+                            <PropertyValue Property="Value" Path="ClaseCuenta"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Cuenta"/>
+                            <PropertyValue Property="Value" Path="Racct"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Desc Cuenta"/>
+                            <PropertyValue Property="Value" Path="Txt50"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Ledger Basico"/>
+                            <PropertyValue Property="Value" Path="LedgerBasico"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Ledger Comp"/>
+                            <PropertyValue Property="Value" Path="LedgerComp"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Diferencia"/>
+                            <PropertyValue Property="Value" Path="Diferencia"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Moneda"/>
+                            <PropertyValue Property="Value" Path="Rtcur"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Permanente"/>
+                            <PropertyValue Property="Value" Path="Permanente"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Imponible"/>
+                            <PropertyValue Property="Value" Path="Imponible"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Deducible"/>
+                            <PropertyValue Property="Value" Path="Deducible"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Imp Diferido"/>
+                            <PropertyValue Property="Value" Path="ImpDiferido"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Tarifa Imp"/>
+                            <PropertyValue Property="Value" Path="TarifaImp"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Tipo Imp"/>
+                            <PropertyValue Property="Value" Path="TipoImp"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Pbukrs</PropertyPath>
+                        <PropertyPath>Pryear</PropertyPath>
+                        <PropertyPath>Brldnr</PropertyPath>
+                        <PropertyPath>Prldnr</PropertyPath>
+                        <PropertyPath>Pldgrp</PropertyPath>
+                        <PropertyPath>Pbfrper</PropertyPath>
+                        <PropertyPath>Pbtoper</PropertyPath>
+                        <PropertyPath>Pcini</PropertyPath>
+                        <PropertyPath>Pcfin</PropertyPath>
+                        <PropertyPath>PtarifImp</PropertyPath>
+                        <PropertyPath>Pbudat</PropertyPath>
+                        <PropertyPath>Pfechcontrev</PropertyPath>
+                        <PropertyPath>Preversar</PropertyPath>
+                        <PropertyPath>Pfechjobrev</PropertyPath>
+                        <PropertyPath>Ptest</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pbukrs" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.FilterDefaultValue" String="IGEN"/>
+            </Annotations>
+            <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Prldnr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.FilterDefaultValue" String="0L"/>
+            </Annotations>
+            <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pbukrs" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="com.sap.vocabularies.Common.v1.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Company Code"/>
+                        <PropertyValue Property="CollectionPath" String="FisshBukrsSet"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Pbukrs"/>
+                                    <PropertyValue Property="ValueListProperty" String="BUKRS"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="BUKRS"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="BUTXT"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="KOKRS"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="KTOPL"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="ORT01"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="WAERS"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="PERIV"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/FisshRldnr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="com.sap.vocabularies.Common.v1.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Help View for the Ledger Display"/>
+                        <PropertyValue Property="CollectionPath" String="FisshRldnrSet"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="FisshRldnr"/>
+                                    <PropertyValue Property="ValueListProperty" String="RLDNR"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="RLDNR"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="NAME"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="XLEADING"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Cuentas" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="com.sap.vocabularies.Common.v1.ValueList">
+                    <Record>
+                        <PropertyValue Property="CollectionPath" String="CuentasSet"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Cuentas"/>
+                                    <PropertyValue Property="ValueListProperty" String="Saknr"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Bukrs"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Ktopl"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Saknr"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Txt50"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Mes" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="com.sap.vocabularies.Common.v1.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Calendar month"/>
+                        <PropertyValue Property="CollectionPath" String="MesSet"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Mes"/>
+                                    <PropertyValue Property="ValueListProperty" String="CALMONTH2"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="CALMONTH2"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="TXTMD"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="TXTLG"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <atom:link rel="self" href="https://vhigeds4scc:443/sap/opu/odata/sap/ZFI_IMP_DIFERIDO_REP1_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://vhigeds4scc:443/sap/opu/odata/sap/ZFI_IMP_DIFERIDO_REP1_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

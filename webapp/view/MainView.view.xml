@@ -1,0 +1,172 @@
+<mvc:View controllerName="isagen.reportimpdiferido.controller.MainView"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:smart="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:core="sap.ui.core">
+    
+   <Page id="page" title="{i18n>title}">
+            <content>
+                <smart:SmartFilterBar id="smart" entitySet="ZFI_IMPDIF_REP1Set" filterChange="handleChange" showMessages="true" enableBasicSearch="false" persistencyKey="UniqueAndStablePersistencyKey" search="onSearch">
+                  <smart:controlConfiguration>
+                        
+                        <smart:ControlConfiguration id="control1"  mandatory="mandatory" key="Pbukrs" label="Sociedad"/>
+                        <smart:ControlConfiguration id="control2" controlType="input" label="Ejercicio" mandatory="mandatory" change="handleChange" hasValueHelpDialog="false" key="Pryear"/>
+                        <smart:ControlConfiguration id="control3" mandatory="mandatory" key="Brldnr" label="Ledger Base"/>
+                        <smart:ControlConfiguration id="control4" mandatory="mandatory" key="Prldnr" label="Ledger comparación"/>
+                        <smart:ControlConfiguration id="control5" mandatory="mandatory" key="Pldgrp" label="Ledger para contabilizar"/>
+                        <smart:ControlConfiguration id="control6" controlType="input" mandatory="mandatory"  key="Pbfrper" label="Mes Inicial"/>
+                        <smart:ControlConfiguration id="control7" controlType="input" mandatory="mandatory"  key="Pbtoper" label="Mes Fin"/>
+                        <smart:ControlConfiguration id="control8" mandatory="mandatory" key="Pcini" label="Cuentas"/>
+                        <smart:ControlConfiguration id="control9" controlType="input" mandatory="mandatory" hasValueHelpDialog="false" key="PtarifImp" label="Tarifa Impuesto"/>
+                        <smart:ControlConfiguration id="control10" key="Pbudat" label="Fecha de Contabilización"/>                        
+                        <smart:ControlConfiguration id="control11" key="Pfechcontrev" label="Fecha de Cont. de Reversión"/>
+                        <smart:ControlConfiguration id="control12" mandatory="mandatory" key="Preversar" label="Reversar Contabilización?"/>
+                        <smart:ControlConfiguration id="control13" key="Pfechjobrev" label="Fecha de JOB de Reversión"/>    
+                        <smart:ControlConfiguration id="control14" key="Ptest" label="Modo test"/>
+
+                    </smart:controlConfiguration>
+                </smart:SmartFilterBar>
+            </content>
+            <smartTable:SmartTable id="tablaImpuesto" visible="false" beforeRebindTable="onGetFilter" entitySet="ZFI_IMPDIF_REP1Set" smartFilterId="smart" tableType="Table"  beforeExport="onExport" useVariantManagement="false" useTablePersonalisation="true" header="Line Items" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="false" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" editTogglable="true">
+				<!-- layout data used to make the table growing but the filter bar fixed -->
+				<smartTable:layoutData>
+					<FlexItemData growFactor="1" baseSize="0%"/>
+				</smartTable:layoutData>
+			</smartTable:SmartTable>
+             <MessageStrip id="Messg1" text="test" type="Warning" showIcon="true" visible="false" showCloseButton="true" class="sapUiNoMarginTop sapUiNoMarginEnd"/>
+
+            <Panel id="panelTablaImpuestoDiferido">
+                <Toolbar id="h" visible="true">
+                    <ToolbarSpacer id="hh"/>
+                    <Button text="Descargar a Excel" visible="false" press="onExport" id="btnExcel" icon="sap-icon://excel-attachment" />
+                    <Button text="Descargar HTML" visible="false" press="exportTableToHTML" id="btnHtml" icon="sap-icon://excel-attachment" />
+                </Toolbar>
+                <Table id="tablaImpuestoDiferido" inset="false" items="{ path: 'modelo4>/', sorter: { path: 'CalseCuenta', descending: false, group: '.getGroup'}, groupHeaderFactory: '.getGroupHeader' }">
+                    <columns>
+                        <Column id="columnImpDif1" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif1" text="{i18n>titTablaImp1}" width="100px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp1}"/>
+                            </header>
+                        </Column>
+
+                        <Column id="columnImpDif2" width="250px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif2" text="{i18n>titTablaImp2}" width="250px" maxLines="3" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp2}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif3" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif3" text="{i18n>titTablaImp3}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp3}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif4" width="400px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif4" text="{i18n>titTablaImp4}" width="400px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp4}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif5" width="200px" hAlign="End" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif5" text="{i18n>titTablaImp5}" width="200px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp5}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif6" width="200px" hAlign="End" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif6" text="{i18n>titTablaImp6}" width="200px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp6}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif7" width="200px" hAlign="End" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif7" text="{i18n>titTablaImp7}" width="200px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp7}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif8" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif8" text="{i18n>titTablaImp8}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp8}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif9" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif9" text="{i18n>titTablaImp9}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp9}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif10" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif10" text="{i18n>titTablaImp10}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp10}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif11" width="100px" hAlign="End" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif11" text="{i18n>titTablaImp11}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp11}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif12" width="200px" hAlign="End" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif12" text="{i18n>titTablaImp12}" width="200px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp12}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif13" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif13" text="{i18n>titTablaImp13}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp13}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif14" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" visible="false">
+                            <header>
+                                <Text id="textImpDif14" text="{i18n>titTablaImp14}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp14}"/>
+                            </header>
+                        </Column>
+                        <Column id="columnImpDif15" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" visible="false">
+                            <header>
+                                <Text id="textImpDif15" text="{i18n>titTablaImp15}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp15}"/>
+                            </header>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem vAlign="Middle" id="itemsTablaImp">
+                            <cells>
+                                <Text id="textImpresul1" text="{modelo4>CalseCuenta}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text id="textImpresul2" text="{modelo4>GrupoCta}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text id="textImpresul3" text="{modelo4>Racct}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text id="textImpresul4" text="{modelo4>Txt50}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text id="textImpresul5" text="{modelo4>LedgerBasico}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" />
+                                <Text id="textImpresul6" text="{modelo4>LedgerComp}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text id="textImpresul7" text="{modelo4>Diferencia}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <!--<Text id="textImpresul8" text="{modelo4>aprobador}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/> 
+                        <Text id="textImpresul9" text="{modelo4>aprobador}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <Text id="textImpresul10" text="{modelo4>aprobador}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+                               <CheckBox id="checkpresul8" />
+                                <CheckBox id="checkpresul9" />
+                                <CheckBox id="checkpresul10" />
+                                <Text id="textImpresul11" text="{modelo4>TarifaImp}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text id="textImpresul12" text="{modelo4>ImpDiferido}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text id="textImpresul13" text="{modelo4>TipoImp}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text id="textImpresul14" text="{modelo4>aprobador}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text id="textImpresul15" text="{modelo4>aprobador}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </Panel>
+            <footer>
+                <Toolbar id="d">
+                    <ToolbarSpacer id="dd"/>
+                    <Button id="btnContabilizar" visible="false" type="Accept" text="{i18n>btn3}" press="onContabilizar" />
+                </Toolbar>
+            </footer>
+        </Page>
+</mvc:View>

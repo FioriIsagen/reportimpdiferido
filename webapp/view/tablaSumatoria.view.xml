@@ -1,0 +1,93 @@
+<mvc:View controllerName="isagen.reportimpdiferido.controller.tablaSumatoria" xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:semantic="sap.f.semantic"
+    xmlns:layout="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:mdc="sap.ui.mdc"
+    xmlns:f="sap.f">
+    
+    <Page id="pageLog" title="{i18n>titParam1}">
+        <Panel id="panelSumatoriaLog" headerText="{i18n>titParam6}">
+        <ScrollContainer id="scrooll2" horizontal="true" vertical="false" focusable="true" height="100%">
+            <Table id="tablaSumatoria" inset="false" 
+            items="{modeloSuma>/}" >
+            <columns>
+                <Column id="columnSum1" width="100px" hAlign="Left" vAlign="Top"  demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                    <header>
+                        <Text id="textSumatoria1" text="{i18n>titTablaSum1}" width="100px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                      <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaSum1}"/>
+                    </header>
+                </Column>        
+                <Column id="columnSum2" width="350px" hAlign="Left" vAlign="Top"  demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                    <header>
+                        <Text id="textSumatoria2" text="{i18n>titTablaSum2}" width="250px" maxLines="3" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaSum2}"/>
+                    </header>
+                </Column>
+                <Column id="columnSum3" width="auto" hAlign="Left" vAlign="Top"  demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                    <header>
+                        <Text id="textSumatoria3" text="{i18n>titTablaSum3}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaSum3}"/>
+                    </header>
+                </Column>
+                <Column id="columnSum4" width="auto" hAlign="Left" vAlign="Top"  demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                    <header>
+                        <Text id="textSumatoria4" text="{i18n>titTablaSum4}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaSum4}"/>
+                    </header>
+                </Column>
+                <Column id="columnSum5" width="auto" hAlign="Left" vAlign="Top"  demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                    <header>
+                        <Text id="textSumatoria5" text="{i18n>titTablaSum5}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaSum5}"/>
+                    </header>
+                </Column>
+                <Column id="columnSum6" width="150px" hAlign="End" vAlign="Top"  demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                    <header>
+                        <Text id="textSumatoria6" text="{i18n>titTablaSum6}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaSum6}"/>
+                    </header>
+                </Column> 
+                <Column id="columnSum7" width="auto" hAlign="Left" vAlign="Top"  demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                    <header>
+                        <Text id="textSumatoria7" text="{i18n>titTablaSum7}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaSum7}"/>
+                    </header>
+                </Column> 
+                <Column id="columnSum8" width="500px" hAlign="Left" vAlign="Top"  demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                    <header>
+                        <Text id="textSumatoria8" text="{i18n>titTablaSum8}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaSum8}"/>
+                    </header>
+                </Column>               
+            </columns>
+                    <items>
+                <ColumnListItem  vAlign="Middle" id="itemsTablaSum">
+                    <cells>
+                        <!--<Text id="textSum1" text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+                        <core:Icon id="Icono" src="{=%{modeloSuma>Ostatus} === 'R' ? 'sap-icon://message-error' : 
+                                                     %{modeloSuma>Ostatus} === 'V' ? 'sap-icon://message-success' : 
+                                                     %{modeloSuma>Ostatus} === 'A' ? 'sap-icon://message-warning' : ''}"
+								              color="{=%{modeloSuma>Ostatus} === 'R'? 'Negative' : 
+                                                       %{modeloSuma>Ostatus} === 'V' ? 'Positive' : 
+                                                       %{modeloSuma>Ostatus} === 'A' ? 'Critical' : ''}" 
+                                              tooltip="{=%{modeloSuma>Ostatus} === 'R' ? %{i18n>est1} :
+                                                         %{modeloSuma>Ostatus} === 'V' ? %{i18n>est3} :
+                                                         %{modeloSuma>Ostatus} === 'A' ? %{i18n>est2} :''}"></core:Icon>
+                        <Text id="textSum2" text="{modeloSuma>Ogrupcuentas}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <Text id="textSum3" text="{modeloSuma>Oclasectas}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <Text id="textSum4" text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <Text id="textSum5" text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" />
+                        <Text id="textSum6" text="{modeloSuma>Oimpuesto}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <Text id="textSum7" text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <Text id="textSum8" text="{modeloSuma>Omensaje}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+                </Table>
+                </ScrollContainer>
+        </Panel>
+    </Page>
+</mvc:View>

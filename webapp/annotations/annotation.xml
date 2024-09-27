@@ -1,0 +1,219 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/sap/ZFI_IMP_DIFERIDO_REP1_SRV/$metadata">
+        <edmx:Include Namespace="ZFI_IMP_DIFERIDO_REP1_SRV" Alias="SAP"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="">
+         <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pbukrs" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <Annotation Term="Common.FilterDefaultValue" String="IGEN"/>
+         </Annotations>
+         <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pryear" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Common.IsCalendarYear" Bool="true"/>
+                <Annotation Term="Common.QuickInfo" String="year"/>
+                <Annotation Term="UI.InputMask">
+                <Record>
+                    <PropertyValue Property="Mask" String="9999"/>
+                </Record>
+                </Annotation >
+        </Annotations>
+         <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Brldnr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pcfin" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Prldnr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <!-- Referencia a la entidad de sociedades desde donde se obtendrán los valores -->
+                    <PropertyValue Property="CollectionPath" String="FisshRldnrSet"/>
+                    <!-- Habilitar la búsqueda en el Value Help -->
+                    <PropertyValue Property="SearchSupported" Bool="true"/>
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <!-- Mapea el campo local 'Pbukrs' con el campo 'BUKRS' en la entidad FisshBukrsSet -->
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Prldnr"/> <!-- Campo local -->
+                                <PropertyValue Property="ValueListProperty" String="RLDNR"/> <!-- Campo en la entidad FisshBukrsSet -->
+                            </Record>
+                            <!-- Mostrar el campo de descripción 'BUTXT' (Nombre Sociedad) en el diálogo de Value Help -->
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="NAME"/> <!-- Campo de descripción -->
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pldgrp" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <!-- Referencia a la entidad de sociedades desde donde se obtendrán los valores -->
+                    <PropertyValue Property="CollectionPath" String="FisshRldnrSet"/>
+                    <!-- Habilitar la búsqueda en el Value Help -->
+                    <PropertyValue Property="SearchSupported" Bool="true"/>
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <!-- Mapea el campo local 'Pbukrs' con el campo 'BUKRS' en la entidad FisshBukrsSet -->
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Pldgrp"/> <!-- Campo local -->
+                                <PropertyValue Property="ValueListProperty" String="RLDNR"/> <!-- Campo en la entidad FisshBukrsSet -->
+                            </Record>
+                            <!-- Mostrar el campo de descripción 'BUTXT' (Nombre Sociedad) en el diálogo de Value Help -->
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="NAME"/> <!-- Campo de descripción -->
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Brldnr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <!-- Referencia a la entidad de sociedades desde donde se obtendrán los valores -->
+                    <PropertyValue Property="CollectionPath" String="FisshRldnrSet"/>
+                    <!-- Habilitar la búsqueda en el Value Help -->
+                    <PropertyValue Property="SearchSupported" Bool="true"/>
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <!-- Mapea el campo local 'Pbukrs' con el campo 'BUKRS' en la entidad FisshBukrsSet -->
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Brldnr"/> <!-- Campo local -->
+                                <PropertyValue Property="ValueListProperty" String="RLDNR"/> <!-- Campo en la entidad FisshBukrsSet -->
+                            </Record>
+                            <!-- Mostrar el campo de descripción 'BUTXT' (Nombre Sociedad) en el diálogo de Value Help -->
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="NAME"/> <!-- Campo de descripción -->
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pcini" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <!-- Referencia a la entidad de sociedades desde donde se obtendrán los valores -->
+                    <PropertyValue Property="CollectionPath" String="CuentasSet"/>
+                    <!-- Habilitar la búsqueda en el Value Help -->
+                    <PropertyValue Property="SearchSupported" Bool="true"/>
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                              <!-- Campo de entrada para filtrar los resultados -->
+                            <Record Type="Common.ValueListParameterIn">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Pbukrs"/> <!-- Campo de filtro local (Sociedad) -->
+                                <PropertyValue Property="ValueListProperty" String="Bukrs"/> <!-- Campo de filtro en la entidad CuentasSet -->
+                            </Record>
+                            <!-- Mapea el campo local 'Pbukrs' con el campo 'BUKRS' en la entidad FisshBukrsSet -->
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Pcini"/> <!-- Campo local -->
+                                <PropertyValue Property="ValueListProperty" String="Saknr"/> <!-- Campo en la entidad FisshBukrsSet -->
+                            </Record>
+                            <!-- Mostrar el campo de descripción 'BUTXT' (Nombre Sociedad) en el diálogo de Value Help -->
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="Txt50"/> <!-- Campo de descripción -->
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pcfin" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <!-- Referencia a la entidad de sociedades desde donde se obtendrán los valores -->
+                    <PropertyValue Property="CollectionPath" String="CuentasSet"/>
+                    <!-- Habilitar la búsqueda en el Value Help -->
+                    <PropertyValue Property="SearchSupported" Bool="true"/>
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                             <!-- Campo de entrada para filtrar los resultados -->
+                            <Record Type="Common.ValueListParameterIn">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Pbukrs"/> <!-- Campo de filtro local (Sociedad) -->
+                                <PropertyValue Property="ValueListProperty" String="Bukrs"/> <!-- Campo de filtro en la entidad CuentasSet -->
+                            </Record>
+                            <!-- Mapea el campo local 'Pbukrs' con el campo 'BUKRS' en la entidad FisshBukrsSet -->
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Pcfin"/> <!-- Campo local -->
+                                <PropertyValue Property="ValueListProperty" String="Saknr"/> <!-- Campo en la entidad FisshBukrsSet -->
+                            </Record>
+                            <!-- Mostrar el campo de descripción 'BUTXT' (Nombre Sociedad) en el diálogo de Value Help -->
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="Txt50"/> <!-- Campo de descripción -->
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pbfrper" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <!-- Referencia a la entidad de sociedades desde donde se obtendrán los valores -->
+                    <PropertyValue Property="CollectionPath" String="MesSet"/>
+                    <!-- Habilitar la búsqueda en el Value Help -->
+                    <PropertyValue Property="SearchSupported" Bool="true"/>
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <!-- Mapea el campo local 'Pbukrs' con el campo 'BUKRS' en la entidad FisshBukrsSet -->
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Pbfrper"/> <!-- Campo local -->
+                                <PropertyValue Property="ValueListProperty" String="CALMONTH2"/> <!-- Campo en la entidad FisshBukrsSet -->
+                            </Record>
+                            <!-- Mostrar el campo de descripción 'BUTXT' (Nombre Sociedad) en el diálogo de Value Help -->
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="TXTLG"/> <!-- Campo de descripción -->
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pbtoper" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <!-- Referencia a la entidad de sociedades desde donde se obtendrán los valores -->
+                    <PropertyValue Property="CollectionPath" String="MesSet"/>
+                    <!-- Habilitar la búsqueda en el Value Help -->
+                    <PropertyValue Property="SearchSupported" Bool="true"/>
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <!-- Mapea el campo local 'Pbukrs' con el campo 'BUKRS' en la entidad FisshBukrsSet -->
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="Pbtoper"/> <!-- Campo local -->
+                                <PropertyValue Property="ValueListProperty" String="CALMONTH2"/> <!-- Campo en la entidad FisshBukrsSet -->
+                            </Record>
+                            <!-- Mostrar el campo de descripción 'BUTXT' (Nombre Sociedad) en el diálogo de Value Help -->
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="TXTLG"/> <!-- Campo de descripción -->
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pbudat" xmlns="http://docs.oasis-open.org/odata/ns/edm"> 
+                <Annotation Term="Common.IsCalendarDate" Bool="true"/>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pfechcontrev" xmlns="http://docs.oasis-open.org/odata/ns/edm"> 
+                <Annotation Term="Common.IsCalendarDate" Bool="true"/>
+        </Annotations>
+        <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Pfechjobrev" xmlns="http://docs.oasis-open.org/odata/ns/edm"> 
+                <Annotation Term="Common.IsCalendarDate" Bool="true"/>
+        </Annotations>
+        </Schema>
+    </edmx:DataServices>c
+</edmx:Edmx>
