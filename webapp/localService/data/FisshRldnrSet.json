@@ -1,0 +1,102 @@
+[
+    {
+        "RLDNR": "DD",
+        "NAME": "NAME1",
+        "XLEADING": true
+    },
+    {
+        "RLDNR": "tU",
+        "NAME": "NAME2",
+        "XLEADING": true
+    },
+    {
+        "RLDNR": "sT",
+        "NAME": "NAME3",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "lP",
+        "NAME": "NAME4",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "zo",
+        "NAME": "NAME5",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "YB",
+        "NAME": "NAME6",
+        "XLEADING": true
+    },
+    {
+        "RLDNR": "Hs",
+        "NAME": "NAME7",
+        "XLEADING": true
+    },
+    {
+        "RLDNR": "Nq",
+        "NAME": "NAME8",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "mB",
+        "NAME": "NAME9",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "ZA",
+        "NAME": "NAME10",
+        "XLEADING": true
+    },
+    {
+        "RLDNR": "Yd",
+        "NAME": "NAME11",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "EQ",
+        "NAME": "NAME12",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "sA",
+        "NAME": "NAME13",
+        "XLEADING": true
+    },
+    {
+        "RLDNR": "ue",
+        "NAME": "NAME14",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "iN",
+        "NAME": "NAME15",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "Sc",
+        "NAME": "NAME16",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "LV",
+        "NAME": "NAME17",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "jn",
+        "NAME": "NAME18",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "qv",
+        "NAME": "NAME19",
+        "XLEADING": false
+    },
+    {
+        "RLDNR": "kU",
+        "NAME": "NAME20",
+        "XLEADING": false
+    }
+]

@@ -110,7 +110,7 @@
                     <PropertyValue Property="SearchSupported" Bool="true"/>
                     <PropertyValue Property="Parameters">
                         <Collection>
-                              <!-- Campo de entrada para filtrar los resultados -->
+                          <!-- Campo de entrada para filtrar los resultados -->
                             <Record Type="Common.ValueListParameterIn">
                                 <PropertyValue Property="LocalDataProperty" PropertyPath="Pbukrs"/> <!-- Campo de filtro local (Sociedad) -->
                                 <PropertyValue Property="ValueListProperty" String="Bukrs"/> <!-- Campo de filtro en la entidad CuentasSet -->

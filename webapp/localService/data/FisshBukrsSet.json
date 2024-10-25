@@ -1,0 +1,182 @@
+[
+    {
+        "BUKRS": "ahls",
+        "BUTXT": "BUTXT1",
+        "KOKRS": "KOK1",
+        "KTOPL": "KTO1",
+        "ORT01": "ORT011",
+        "WAERS": "WAER1",
+        "PERIV": "P1"
+    },
+    {
+        "BUKRS": "toyq",
+        "BUTXT": "BUTXT2",
+        "KOKRS": "KOK2",
+        "KTOPL": "KTO2",
+        "ORT01": "ORT012",
+        "WAERS": "WAER2",
+        "PERIV": "P2"
+    },
+    {
+        "BUKRS": "fdzr",
+        "BUTXT": "BUTXT3",
+        "KOKRS": "KOK3",
+        "KTOPL": "KTO3",
+        "ORT01": "ORT013",
+        "WAERS": "WAER3",
+        "PERIV": "P3"
+    },
+    {
+        "BUKRS": "gapD",
+        "BUTXT": "BUTXT4",
+        "KOKRS": "KOK4",
+        "KTOPL": "KTO4",
+        "ORT01": "ORT014",
+        "WAERS": "WAER4",
+        "PERIV": "P4"
+    },
+    {
+        "BUKRS": "EiDo",
+        "BUTXT": "BUTXT5",
+        "KOKRS": "KOK5",
+        "KTOPL": "KTO5",
+        "ORT01": "ORT015",
+        "WAERS": "WAER5",
+        "PERIV": "P5"
+    },
+    {
+        "BUKRS": "sdzi",
+        "BUTXT": "BUTXT6",
+        "KOKRS": "KOK6",
+        "KTOPL": "KTO6",
+        "ORT01": "ORT016",
+        "WAERS": "WAER6",
+        "PERIV": "P6"
+    },
+    {
+        "BUKRS": "fBQv",
+        "BUTXT": "BUTXT7",
+        "KOKRS": "KOK7",
+        "KTOPL": "KTO7",
+        "ORT01": "ORT017",
+        "WAERS": "WAER7",
+        "PERIV": "P7"
+    },
+    {
+        "BUKRS": "fVbj",
+        "BUTXT": "BUTXT8",
+        "KOKRS": "KOK8",
+        "KTOPL": "KTO8",
+        "ORT01": "ORT018",
+        "WAERS": "WAER8",
+        "PERIV": "P8"
+    },
+    {
+        "BUKRS": "rGzt",
+        "BUTXT": "BUTXT9",
+        "KOKRS": "KOK9",
+        "KTOPL": "KTO9",
+        "ORT01": "ORT019",
+        "WAERS": "WAER9",
+        "PERIV": "P9"
+    },
+    {
+        "BUKRS": "yvGB",
+        "BUTXT": "BUTXT10",
+        "KOKRS": "KO10",
+        "KTOPL": "KT10",
+        "ORT01": "ORT0110",
+        "WAERS": "WAE10",
+        "PERIV": "10"
+    },
+    {
+        "BUKRS": "GLiX",
+        "BUTXT": "BUTXT11",
+        "KOKRS": "KO11",
+        "KTOPL": "KT11",
+        "ORT01": "ORT0111",
+        "WAERS": "WAE11",
+        "PERIV": "11"
+    },
+    {
+        "BUKRS": "gjTD",
+        "BUTXT": "BUTXT12",
+        "KOKRS": "KO12",
+        "KTOPL": "KT12",
+        "ORT01": "ORT0112",
+        "WAERS": "WAE12",
+        "PERIV": "12"
+    },
+    {
+        "BUKRS": "ljPi",
+        "BUTXT": "BUTXT13",
+        "KOKRS": "KO13",
+        "KTOPL": "KT13",
+        "ORT01": "ORT0113",
+        "WAERS": "WAE13",
+        "PERIV": "13"
+    },
+    {
+        "BUKRS": "mSJH",
+        "BUTXT": "BUTXT14",
+        "KOKRS": "KO14",
+        "KTOPL": "KT14",
+        "ORT01": "ORT0114",
+        "WAERS": "WAE14",
+        "PERIV": "14"
+    },
+    {
+        "BUKRS": "eQrz",
+        "BUTXT": "BUTXT15",
+        "KOKRS": "KO15",
+        "KTOPL": "KT15",
+        "ORT01": "ORT0115",
+        "WAERS": "WAE15",
+        "PERIV": "15"
+    },
+    {
+        "BUKRS": "wmbW",
+        "BUTXT": "BUTXT16",
+        "KOKRS": "KO16",
+        "KTOPL": "KT16",
+        "ORT01": "ORT0116",
+        "WAERS": "WAE16",
+        "PERIV": "16"
+    },
+    {
+        "BUKRS": "eKRA",
+        "BUTXT": "BUTXT17",
+        "KOKRS": "KO17",
+        "KTOPL": "KT17",
+        "ORT01": "ORT0117",
+        "WAERS": "WAE17",
+        "PERIV": "17"
+    },
+    {
+        "BUKRS": "lHNL",
+        "BUTXT": "BUTXT18",
+        "KOKRS": "KO18",
+        "KTOPL": "KT18",
+        "ORT01": "ORT0118",
+        "WAERS": "WAE18",
+        "PERIV": "18"
+    },
+    {
+        "BUKRS": "RrXg",
+        "BUTXT": "BUTXT19",
+        "KOKRS": "KO19",
+        "KTOPL": "KT19",
+        "ORT01": "ORT0119",
+        "WAERS": "WAE19",
+        "PERIV": "19"
+    },
+    {
+        "BUKRS": "dgvu",
+        "BUTXT": "BUTXT20",
+        "KOKRS": "KO20",
+        "KTOPL": "KT20",
+        "ORT01": "ORT0120",
+        "WAERS": "WAE20",
+        "PERIV": "20"
+    }
+]

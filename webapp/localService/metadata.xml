@@ -24,6 +24,7 @@
                     <PropertyRef Name="Preversar"/>
                     <PropertyRef Name="Pfechjobrev"/>
                     <PropertyRef Name="Ptest"/>
+                    <PropertyRef Name="ImpDifOri"/>
                     <PropertyRef Name="CalseCuenta"/>
                     <PropertyRef Name="GrupoCta"/>
                     <PropertyRef Name="ClaseCuenta"/>
@@ -39,6 +40,7 @@
                     <PropertyRef Name="ImpDiferido"/>
                     <PropertyRef Name="TarifaImp"/>
                     <PropertyRef Name="TipoImp"/>
+                    <PropertyRef Name="Contrapartida"/>
                 </Key>
                 <Property Name="Pbukrs" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sociedad" sap:creatable="false" sap:sortable="false" sap:value-list="standard"/>
                 <Property Name="Pryear" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Ejercicio" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
@@ -55,6 +57,7 @@
                 <Property Name="Preversar" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Carácter 1" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
                 <Property Name="Pfechjobrev" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Fecha contab." sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
                 <Property Name="Ptest" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Modo test" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="ImpDifOri" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Imp.Dif. al ORI" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
                 <Property Name="CalseCuenta" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Clase Cuenta" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
                 <Property Name="GrupoCta" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Significado" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
                 <Property Name="ClaseCuenta" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Clase Cuenta" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
@@ -70,6 +73,7 @@
                 <Property Name="ImpDiferido" Type="Edm.Decimal" Nullable="false" Precision="24" Scale="3" sap:unicode="false" sap:label="Impuesto Diferido" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
                 <Property Name="TarifaImp" Type="Edm.Decimal" Nullable="false" Precision="6" Scale="2" sap:unicode="false" sap:label="Tarifa Impuesto" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
                 <Property Name="TipoImp" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Clase Cuenta" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="Contrapartida" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Contrapartida" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
             </EntityType>
             <EntityType Name="FisshBukrs" sap:value-list="true" sap:content-version="1">
                 <Key>
@@ -87,7 +91,7 @@
                 <Key>
                     <PropertyRef Name="RLDNR"/>
                 </Key>
-                <Property Name="RLDNR" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Ledger" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RLDNR" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Ledger" sap:creatable="false" sap:updatable="false"/>
                 <Property Name="NAME" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Nombre ledger" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="XLEADING" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Ledger principal" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
             </EntityType>
@@ -106,20 +110,37 @@
                 <Key>
                     <PropertyRef Name="CALMONTH2"/>
                 </Key>
-                <Property Name="CALMONTH2" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Mes natural" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="TXTMD" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Descripción media" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="TXTLG" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Descripción larga" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CALMONTH2" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Mes natural" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="TXTMD" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Descripción media" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="TXTLG" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Descripción larga" sap:creatable="false" sap:updatable="false"/>
+            </EntityType>
+            <EntityType Name="FisshSaknrGenericBukrs" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="BUKRS"/>
+                    <PropertyRef Name="SAKNR"/>
+                    <PropertyRef Name="KTOPL"/>
+                </Key>
+                <Property Name="BUKRS" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sociedad" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="SAKNR" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cta.mayor" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="KTOPL" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plan cuentas" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="TXT50" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Texto expl." sap:creatable="false" sap:updatable="false"/>
+                <Property Name="XOPVW" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Gestión de PAs" sap:creatable="false" sap:updatable="false"/>
             </EntityType>
             <EntityContainer Name="ZFI_IMP_DIFERIDO_REP1_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
                 <EntitySet Name="ZFI_IMPDIF_REP1Set" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
                 <EntitySet Name="FisshBukrsSet" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.FisshBukrs" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:pageable="false" sap:content-version="1"/>
                 <EntitySet Name="FisshRldnrSet" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.FisshRldnr" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:pageable="false" sap:content-version="1"/>
                 <EntitySet Name="CuentasSet" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.Cuentas" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:pageable="false" sap:content-version="1"/>
-                <EntitySet Name="MesSet" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.Mes" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="MesSet" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.Mes" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FisshSaknrGenericBukrsSet" EntityType="ZFI_IMP_DIFERIDO_REP1_SRV.FisshSaknrGenericBukrs" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
             </EntityContainer>
             <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1" xmlns="http://docs.oasis-open.org/odata/ns/edm">
                 <Annotation Term="UI.LineItem">
                     <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Imp.Diferido al ORI"/>
+                            <PropertyValue Property="Value" Path="ImpDifOri"/>
+                        </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Label" String="Clase Cuenta"/>
                             <PropertyValue Property="Value" Path="CalseCuenta"/>
@@ -184,6 +205,7 @@
                 </Annotation>
                 <Annotation Term="UI.SelectionFields">
                     <Collection>
+                        <PropertyPath>ImpDifOri</PropertyPath>
                         <PropertyPath>Pbukrs</PropertyPath>
                         <PropertyPath>Pryear</PropertyPath>
                         <PropertyPath>Brldnr</PropertyPath>
@@ -275,7 +297,9 @@
             <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/Cuentas" xmlns="http://docs.oasis-open.org/odata/ns/edm">
                 <Annotation Term="com.sap.vocabularies.Common.v1.ValueList">
                     <Record>
+                        <PropertyValue Property="Label" String="G/L accounts in company code and chart of accounts"/>
                         <PropertyValue Property="CollectionPath" String="CuentasSet"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
                         <PropertyValue Property="Parameters">
                             <Collection>
                                 <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
@@ -318,6 +342,38 @@
                                 </Record>
                                 <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
                                     <PropertyValue Property="ValueListProperty" String="TXTLG"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZFI_IMP_DIFERIDO_REP1_SRV.ZFI_IMPDIF_REP1/FisshSaknrGenericBukrs" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="com.sap.vocabularies.Common.v1.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="G/L accounts in company code and chart of accounts"/>
+                        <PropertyValue Property="CollectionPath" String="FisshSaknrGenericBukrsSet"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="FisshSaknrGenericBukrs"/>
+                                    <PropertyValue Property="ValueListProperty" String="SAKNR"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="BUKRS"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="SAKNR"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="KTOPL"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="TXT50"/>
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="XOPVW"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>

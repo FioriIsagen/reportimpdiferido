@@ -78,10 +78,10 @@
                                                          %{modeloSuma>Ostatus} === 'A' ? %{i18n>est2} :''}"></core:Icon>
                         <Text id="textSum2" text="{modeloSuma>Ogrupcuentas}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                         <Text id="textSum3" text="{modeloSuma>Oclasectas}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        <Text id="textSum4" text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        <Text id="textSum5" text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" />
+                        <Text id="textSum4" text="{modeloSuma>Ocuenta}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <Text id="textSum5" text="{modeloSuma>Ocuentagasto}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" />
                         <Text id="textSum6" text="{modeloSuma>Oimpuesto}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                        <Text id="textSum7" text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        <Text id="textSum7" text="{modeloSuma>Odocumento}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                         <Text id="textSum8" text="{modeloSuma>Omensaje}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                     </cells>
                 </ColumnListItem>
@@ -89,5 +89,11 @@
                 </Table>
                 </ScrollContainer>
         </Panel>
+        <footer>
+                <Toolbar id="d2">
+                    <ToolbarSpacer id="dd2"/>
+                    <Button id="btnExcel2"  type="Accept" text="{i18n>btn4}" icon="sap-icon://excel-attachment" press="onExport" />
+                </Toolbar>
+        </footer>
     </Page>
 </mvc:View>

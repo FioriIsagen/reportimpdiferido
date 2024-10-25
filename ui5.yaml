@@ -21,6 +21,9 @@ server:
             client: '110'
             destination: S4HANADEV110
             authenticationType: BasicAuthentication
+          - path: /sap/bc/lrep
+            destination: S4HANADEV110
+            entryPath: /sap/bc/lrep
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

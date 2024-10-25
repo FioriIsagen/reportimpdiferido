@@ -46,6 +46,9 @@ sap.ui.define([
             gLedgerTxt: "",
             txtLedgerBase: "",
             bFirstSearch:true,
+            sFilter:"",
+            contrapartida:"",
+            bTarImp:true,
 
             onInit: function () {
                 var that = this;
@@ -116,9 +119,11 @@ sap.ui.define([
             onRellenarTabla: function (sFilter) {
 
 
+                this.subtotal=[];
                 var Deducible, Imponible, Permanente;
                 var sServiceURL = "/sap/opu/odata/sap/ZFI_IMP_DIFERIDO_REP1_SRV/";
                 var sSource=sServiceURL+"ZFI_IMPDIF_REP1Set?"+sFilter;
+                this.sFilter=sFilter;
                 //var sSource = sServiceURL + "ZFI_IMPDIF_REP1Set?$filter=( Pbukrs eq '" + this.Sociedad + "' and Pryear eq '" + this.Ejercicio + "' and Prldnr eq '" + this.Ledger + "' and Pldgrp eq '" + this.GLedger + "' and Pbfrper eq '" + this.MesIni + "' and Pbtoper eq '" + this.MesFin + "' and Pbudat eq '" + this.fechCont + "' and PtarifImp eq '" + this.TarifImpuesto + "' and Pfechcontrev eq '" + this.fechCont + "' and Preversar eq '" + this.revCont + "'and Pfechjobrev eq '" + this.fechContJob + "'and Ptest eq'" + this.Test + "' " + filterIni + " and  Brldnr eq '" + this.LedgerBase + "')";
 
 
@@ -170,7 +175,7 @@ sap.ui.define([
                             var x1004 = (numero4 * 100)
                             var formatoMoneda4 = x1004.toLocaleString("es-CO");
                             var ImpDiferido = formatoMoneda4.toString(formatoMoneda4);
-
+                            this.contrapartida=result.Contrapartida;
                             datos.push({
                                 CalseCuenta: result.CalseCuenta,
                                 ClaseCuenta: result.ClaseCuenta,
@@ -196,31 +201,53 @@ sap.ui.define([
                                 Rtcur: result.Rtcur,
                                 TarifaImp: result.TarifaImp,
                                 TipoImp: result.TipoImp,
-                                Txt50: result.Txt50
+                                Txt50: result.Txt50,
+                                Contrapartida:result.Contrapartida,
+                                FechaEjecucion:result.FechaEjecucion.replace(/(\d{4})(\d{2})(\d{2})/, "$3/$2/$1")
                             });
                         }
                     }
                     var odata4 = new JSONModel(datos);
-                    this.getView().setModel(odata4, "modelo4");
+                    odata4.setSizeLimit(9999);
+                    odata4.refresh(true);
+                    this.getView().setModel(odata4, "modelo4");                 
                     if (datos.length > 0) {
                         this.getView().byId("btnExcel").setVisible(true);
                         this.getView().byId("btnHtml").setVisible(true);
                         this.getView().byId("btnContabilizar").setVisible(true);
+                        this.getView().byId("panelTablaImpuestoDiferido").setVisible(true);
+                        this.setColumnsVisible(this.getImpDifOri());
+                        this.setTitle();
+                        this.onRevisionCheck();
                     }
                     else {
                         this.getView().byId("btnExcel").setVisible(false);
                         this.getView().byId("btnHtml").setVisible(false);
                         this.getView().byId("btnContabilizar").setVisible(false);
+                        this.getView().byId("panelTablaImpuestoDiferido").setVisible(false);
+                        this.contrapartida="";
                         MessageBox.alert("No se encontraron datos con los filtros seleccionados");
                     }
-                    this.getView().byId("h").setVisible(true);
-                    this.onRevisionCheck();
+                    
                 } catch (err) {
                     sap.ui.core.BusyIndicator.hide();
                 }
 
             },
-
+            setTitle:function()
+            {
+                try
+                {
+                var texto1="<strong>Ledger Básico"+this.getLedgerBase()+"</strong>";
+                var texto2="<strong>Ledger Comparativo"+this.getLedgerComparativo()+"</strong>";
+                this.byId("tablaImpuestoDiferido").getColumns()[4].getAggregation("header").setProperty("htmlText",texto1);
+                this.byId("tablaImpuestoDiferido").getColumns()[5].getAggregation("header").setProperty("htmlText",texto2);    
+                }catch(ex)
+                {
+                    
+                }
+                
+            },
             getCounty: function (oContext) {
                 var sKey = oContext.getProperty('CalseCuenta') + "-" + oContext.getProperty('GrupoCta') + "-" + oContext.getProperty('TipoImp');
                 return {
@@ -231,13 +258,30 @@ sap.ui.define([
 
             getGroup: function (oContext) {
 
-                var grupo = oContext.getProperty('GrupoCta');
-                var impu = oContext.getProperty('TipoImp');
-                var clase = oContext.getProperty('CalseCuenta');
-                var moneda = oContext.getProperty('Rtcur');
-                return grupo + '-' + impu + '-' + clase + '-' + moneda;
+                if(!this.getImpDifOri())
+                {
+                    var grupo = oContext.getProperty('GrupoCta');
+                    var impu = oContext.getProperty('TipoImp');
+                    var clase = oContext.getProperty('CalseCuenta');
+                    var moneda = oContext.getProperty('Rtcur');
+                    return grupo + '-' + impu + '-' + clase + '-' + moneda;
+                }
             },
+            getGroup3: function (position) {
 
+              
+                    var modelo=this.getView().getModel("modelo4").getData();
+                    if(modelo.length>0)
+                    {
+                        
+                        var grupo = modelo[position].GrupoCta;
+                        var impu = modelo[position].TipoImp;
+                        var clase = modelo[position].CalseCuenta;
+                        var moneda = modelo[position].Rtcur;
+                        return grupo + '-' + impu + '-' + clase + '-' + moneda;
+                    }
+                
+            },
             getGroup2: function (oContext) {
                 this.impu = oContext.getProperty('TipoImp')
                 return this.impu;
@@ -249,11 +293,18 @@ sap.ui.define([
                 this.grupo;
                 this.impu;
 
+                if(!this.getImpDifOri())
+                {
+                    return new sap.m.GroupHeaderListItem({
 
-                return new sap.m.GroupHeaderListItem({
-
-                    title: "Subtotal " + this.getGroupSum(oGroup.key)
-                });
+                        title: "Subtotal " + this.getGroupSum(oGroup.key)
+                    });
+                    
+                }
+                else
+                {
+                    var a=this.getGroupSum(oGroup.key?oGroup.key:oGroup);
+                }
             },
 
             getGroupSum: function (sKey) {
@@ -262,7 +313,10 @@ sap.ui.define([
                 var that = this
 
                 var KEY = sKey.split('-');
-
+                if(KEY.length>4)
+                {
+                    KEY.splice(1, 1);
+                }
                 var grupo = KEY[0];
                 var impu = KEY[1];
                 var clase = KEY[2];
@@ -338,6 +392,7 @@ sap.ui.define([
                     }
                 });
             },
+            /*
             onExport: function () {
                 var aCols, oRowBinding, oSettings, oSheet, oTable;
 
@@ -376,22 +431,221 @@ sap.ui.define([
                 oSheet.build().finally(function () {
                     oSheet.destroy();
                 });
+            },*/
+            onExport: function () {
+                var aCols, oRowBinding, oSettings, oSheet, oTable;
+                var oController = this;
+            
+                if (!this._oTable) {
+                    this._oTable = this.byId("tablaImpuestoDiferido");
+                }
+            
+                oTable = this._oTable;
+                oRowBinding = oTable.getBinding("items");
+                aCols = this.createColumnConfig();
+            
+                // Realizar validación previa para determinar el tipo de exportación
+                var bIncludeGroupHeaders = this.getImpDifOri(); // Método para validar si se incluyen encabezados
+            
+                if (!bIncludeGroupHeaders) {
+                    // Configuración con encabezados de grupo
+                    var aData = [];
+                    var aContexts = oRowBinding.getContexts();
+            
+                    // Variables para mantener el estado de los grupos actuales
+                    var sLastGroupKey = null;
+            
+                    // Recorrer los datos y agregar encabezados de grupo cuando sea necesario
+                    aContexts.forEach(function (oContext, i) {
+                        var oRowData = oContext.getObject();
+            
+                        // Construir la clave del grupo actual para comparación
+                        var sCurrentGroupKey = oRowData.GrupoCta + "-" + oRowData.TipoImp;
+            
+                        // Si la clave de grupo cambia o es el primer grupo, agregar un subtotal antes de las filas de datos
+                        if (sLastGroupKey !== sCurrentGroupKey) {
+                            if (sLastGroupKey !== null) {
+                                // Agregar el subtotal del grupo anterior
+                                var sSubtotal = oController.getGroupSum(sLastGroupKey);
+                                aData.push({
+                                    CalseCuenta: "Subtotal " + sSubtotal, // Subtotal en la primera columna como encabezado
+                                    GrupoCta: "", // Dejar las otras columnas en blanco
+                                    Racct: "",
+                                    Txt50: "",
+                                    LedgerBasico: "",
+                                    LedgerComp: "",
+                                    Diferencia: "",
+                                    Permanente: "",
+                                    Imponible: "",
+                                    Deducible: "",
+                                    TarifaImp: "",
+                                    ImpDiferido: "",
+                                    TipoImp: "",
+                                    FechaEjecucion:"",
+                                    style: { bold: true } // Aplicar estilo bold
+                                });
+                            }
+            
+                            // Actualizar la clave del último grupo
+                            sLastGroupKey = sCurrentGroupKey;
+                        }
+            
+                        // Agregar la fila de datos actual
+                        aData.push({
+                            CalseCuenta: oRowData.CalseCuenta,
+                            GrupoCta: oRowData.GrupoCta,
+                            Racct: oRowData.Racct,
+                            Txt50: oRowData.Txt50,
+                            LedgerBasico: oRowData.LedgerBasico,
+                            LedgerComp: oRowData.LedgerComp,
+                            Diferencia: oRowData.Diferencia,
+                            Permanente: oRowData.Permanente,
+                            Imponible: oRowData.Imponible,
+                            Deducible: oRowData.Deducible,
+                            TarifaImp: oRowData.TarifaImp,
+                            ImpDiferido: oRowData.ImpDiferido,
+                            TipoImp: oRowData.TipoImp,
+                            FechaEjecucion:oRowData.FechaEjecucion
+                        });
+                    });
+            
+                    // Agregar el subtotal para el último grupo si hay datos
+                    if (sLastGroupKey) {
+                        var sFinalSubtotal = oController.getGroupSum(sLastGroupKey);
+                        aData.push({
+                            CalseCuenta: "Subtotal " + sFinalSubtotal, // Encabezado en la primera columna
+                            GrupoCta: "",
+                            Racct: "",
+                            Txt50: "",
+                            LedgerBasico: "",
+                            LedgerComp: "",
+                            Diferencia: "",
+                            Permanente: "",
+                            Imponible: "",
+                            Deducible: "",
+                            TarifaImp: "",
+                            ImpDiferido: "",
+                            TipoImp: "",
+                            style: { bold: true } // Aplicar estilo bold
+                        });
+                    }
+            
+                    // Ajuste de configuración para incluir encabezados personalizados
+                    oSettings = {
+                        workbook: {
+                            columns: aCols,
+                            hierarchyLevel: "Level"
+                        },
+                        dataSource: aData,
+                        fileName: "Impuesto_Diferido.xlsx",
+                        worker: false, // Necesario para deshabilitar worker porque se está usando un MockServer como OData Service
+                        onBeforeExport: function (oEvent) {
+                            var oSheet = oEvent.getParameter("exportSettings").workbook.getWorksheet(0);
+                            var aRows = oSheet.getRows();
+                            
+                               // Obtener la fecha actual
+                            var oDate = new Date();
+                            var sDate = oDate.toLocaleDateString() + " " + oDate.toLocaleTimeString();
+                            
+                            // Insertar la fila con la fecha de generación en la primera posición
+                            aRows.unshift({
+                                cells: [
+                                    { value: "Fecha de generación del reporte: " + sDate }
+                                ]
+                            });
+
+                            aRows.forEach(function (oRow) {
+                                oRow.eachCell({ includeEmpty: true }, function (cell, colNumber) {
+                                    var value = cell.value;
+                                    if (value === true || value === "true") {
+                                        cell.value = "X";
+                                    }
+                                    // Aplicar estilo bold a las filas de subtotales
+                                    if (value && value.toString().startsWith("Subtotal")) {
+                                        cell.font = { bold: true };
+                                    }
+                                });
+                            });
+                        }
+                    };
+            
+                } else {
+                    // Configuración original sin encabezados de grupo
+                    oSettings = {
+                        workbook: {
+                            columns: aCols,
+                            hierarchyLevel: "Level"
+                        },
+                        dataSource: oRowBinding,
+                        fileName: "Impuesto_Diferido.xlsx",
+                        worker: false, // Necesario para deshabilitar worker porque se está usando un MockServer como OData Service
+                        onBeforeExport: function (oEvent) {
+                            var oSheet = oEvent.getParameter("exportSettings").workbook.getWorksheet(0);
+                            var aRows = oSheet.getRows();
+            
+                            aRows.forEach(function (oRow) {
+                                oRow.eachCell({ includeEmpty: true }, function (cell, colNumber) {
+                                    var value = cell.value;
+                                    if (value === true || value === "true") {
+                                        cell.value = "X";
+                                    }
+                                });
+                            });
+                        }
+                    };
+                }
+            
+                oSheet = new sap.ui.export.Spreadsheet(oSettings);
+                oSheet.build().finally(function () {
+                    oSheet.destroy();
+                });
             },
+            getGroupHeaderForRow: function (oRowData, iRowIndex, aData, oController) {
+                var grupo = oRowData.GrupoCta;
+                var impu = oRowData.TipoImp;
+                var clase = oRowData.Clase;
+                var moneda = oRowData.Moneda;
+            
+                // Construir la clave de grupo
+                var sKey = grupo + '-' + impu + '-' + clase + '-' + moneda;
+            
+                // Llamar a getGroupSum para obtener el subtotal
+                var sSubtotal = oController.getGroupSum(sKey);
+            
+                // Si es el inicio de un nuevo grupo, devolver el encabezado
+                if (iRowIndex === 0 || (aData[iRowIndex - 1].GrupoCta !== grupo || aData[iRowIndex - 1].TipoImp !== impu)) {
+                    return "Subtotal " + sSubtotal;
+                }
+            
+                // Si no es un nuevo grupo, devolver null
+                return null;
+            },
+            
             exportTableToHTML: function() {
                 // Referencia a la tabla
                 var oTable = this.byId("tablaImpuestoDiferido");
-            
+                var oDate = new Date();
+                var sDate = oDate.toLocaleDateString() + " " + oDate.toLocaleTimeString();
                 // Inicio del HTML
                 var sHtml = "<html><head><title>Exported Table</title></head><body>";
                 sHtml += "<table border='1'><thead><tr>";
-            
+                // Añadir la columna de "Fecha de ejecución" al encabezado
                 var columns = oTable.getColumns();
-
+                var that=this;
                 // Añadir las cabeceras de las columnas
                 columns.forEach(function(column) {
                     var sHeaderText = column.getHeader().mProperties.htmlText; // Obtener el texto del encabezado
+                    if(sHeaderText.includes(that.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp5")))
+                    {
+                        sHeaderText="<strong>"+that.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp5")+that.getLedgerBase()+"</strong>";
+                    }
+                    else if(sHeaderText.includes(that.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp6")))
+                    {
+                        sHeaderText="<strong>"+that.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp6")+that.getLedgerComparativo()+"</strong>";
+                    }   
                     sHtml += "<th>" + sHeaderText + "</th>";
                 });
+                sHtml += "<th>Fecha de Ejecución</th>";
                 sHtml += "</tr></thead><tbody>";
             
                 // Obtener los items (filas) de la tabla
@@ -403,7 +657,6 @@ sap.ui.define([
                         sHtml += "<tr>";
                         item.getCells().forEach(function(cell, index) {
                             var sText = "";
-            
                             // Verificar si la columna es una de las específicas (columnImpDif8, columnImpDif9, columnImpDif10)
                             if (index === 7 || index === 8 || index === 9) { // Asegúrate de que estos índices coinciden con las columnas correspondientes
                                 // Si es verdadero, coloca "X", de lo contrario, deja vacío
@@ -415,6 +668,7 @@ sap.ui.define([
             
                             sHtml += '<td style="text-align: center;">' + sText + "</td>";
                         });
+                        sHtml += '<td style="text-align: center;">' + sDate + "</td>";
                         sHtml += "</tr>";
                     }
                     else
@@ -480,13 +734,13 @@ sap.ui.define([
                 });
 
                 aCols.push({
-                    label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp5"),
+                    label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp5")+this.getLedgerBase(),
                     property: "LedgerBasico",
                     type: EdmType.String
                 });
 
                 aCols.push({
-                    label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp6"),
+                    label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp6")+this.getLedgerComparativo(),
                     property: "LedgerComp",
                     type: EdmType.String
                 });
@@ -527,6 +781,11 @@ sap.ui.define([
                     property: "TipoImp",
                     type: EdmType.String
                 });
+                aCols.push({
+                    label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp17"),
+                    property: "FechaEjecucion",
+                    type: EdmType.String
+                });
 
                 return aCols;
             },
@@ -555,9 +814,40 @@ sap.ui.define([
                 }
             },
             onContabilizar: function () {
-
+                var that=this;
+             MessageBox.confirm("¿Está seguro que desea contabilizar?", {
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                emphasizedAction: MessageBox.Action.OK,
+                onClose: function (sAction) {
+                    if (sAction === MessageBox.Action.OK) {
+                        that.onContabilizar2();
+                    } else {
+                       return;
+                    }
+                }
+            });               
+            },
+            onContabilizar2: function(){
+                sap.ui.core.BusyIndicator.show(true);
                 let ImpDifCont = [];
+                if(this.subtotal.length==0)
+                {
+                    var model=this.getView().getModel("modelo4").getData();
+                    for(let j = 0; j < model.length; j++)
+                    {
 
+                        this.subtotal.push({
+                            suma: model[j].ImpDiferido.split(".").join(""),
+                            grupo: "",
+                            impu: model[j].TipoImp,
+                            clase: "",
+                            moneda: model[j].Rtcur,
+                            contrapartida:model[j].Contrapartida
+                        });
+                        //var oGroup=this.getGroup3(j);
+                        //this.getGroupHeader(oGroup);
+                    }
+                }
                 for (let i = 0; i < this.subtotal.length; i++) {
 
                     var num = this.subtotal[i].suma;
@@ -571,7 +861,7 @@ sap.ui.define([
                         Oclascta: this.subtotal[i].clase,
                         Ogrupcuentas: this.subtotal[i].grupo,
                         Oclasectas: this.subtotal[i].impu,
-                        Ocuenta: "",
+                        Ocuenta: this.subtotal[i].contrapartida,
                         Ocuentagasto: "",
                         Oimpuesto: textoSinPuntos,
                         Omoneda: this.subtotal[i].moneda,
@@ -579,17 +869,25 @@ sap.ui.define([
                         Omensaje: ""
                     })
                 }
-
-                var script = {
-                    "Pbukrs": this.Sociedad,
-                    "Pfechacont": this.fechCont,
-                    "Pldgrp": this.GLedger,
-                    "Pfechcontrev": this.fechContRev,
-                    "Preversar": this.revCont,
-                    "Pfechjobrev": this.fechContJob,
-                    "Pbtoper": this.MesFin,
-                    "Ptest": this.Test,
-                    ImpDifCont
+                var oSmartFilterBar = this.byId("smart");
+                var aFilterData = oSmartFilterBar.getFilterData();
+                try
+                {
+                    var script = {
+                        "Pbukrs": aFilterData["Pbukrs"].ranges[0].value1,//this.Sociedad,
+                        "Pfechacont": aFilterData["Pbudat"].ranges[0].value1,//this.fechCont,
+                        "Pldgrp": aFilterData["Pldgrp"].items[0].key,//this.GLedger,
+                        "Pfechcontrev": aFilterData["Pfechcontrev"].ranges[0].value1,
+                        "Preversar": this.formatBoolean(aFilterData["Preversar"]),
+                        "Pfechjobrev": aFilterData["Pfechjobrev"]?aFilterData["Pfechjobrev"].ranges[0].value1:"",
+                        "Pbtoper": aFilterData["Pbtoper"].items.length>0?aFilterData["Pbtoper"].items[0].key:aFilterData["Pbtoper"].value,
+                        "Ptest": this.formatBoolean(aFilterData["Ptest"]),
+                        "ImpDifOri":this.formatBoolean2(aFilterData["ImpDifOri"]),
+                        ImpDifCont
+                    }
+                }catch(ex)
+                {
+                    console.log(ex);
                 }
 
                 //URL DEL PORTAL
@@ -599,13 +897,16 @@ sap.ui.define([
                 var oModel = new sap.ui.model.odata.v2.ODataModel(modelo);
                 var that = this;
 
-                let modeloSuma = []
+                let modeloSuma = [];
+                let modeloLedger=[];
+                modeloLedger.push(script.Pldgrp);
 
                 oModel.create("/CabeceraSet", script, {
                     success: function (oData, oResponse) {
                         //   console.log(oData)
                         //   console.log(oResponse)
-
+                    if(!oResponse.data.Mensaje)
+                    {        
                         for (let j = 0; j < oResponse.data.ImpDifCont.results.length; j++) {
                             modeloSuma.push({
                                 Oclascta: oResponse.data.ImpDifCont.results[j].Oclascta,
@@ -621,14 +922,22 @@ sap.ui.define([
                                 Pbukrs: oResponse.data.ImpDifCont.results[j].Pbukrs
                             });
                         }
-
                         sap.ui.getCore().setModel(modeloSuma, "modeloSuma");
+                        sap.ui.getCore().setModel(modeloLedger,"modeloLedger");
                         that.onPasarTabla();
+                        sap.ui.core.BusyIndicator.hide();
+                    }else
+                    {
+                        MessageBox.alert(oResponse.data.Mensaje);
+                        sap.ui.core.BusyIndicator.hide();
+                        return;
+                    }
 
                     },
                     error: function (oError) {
                         console.log(oError.message);
                         console.log(oError.responseText);
+                        sap.ui.core.BusyIndicator.hide();
                     }
                 });
             },
@@ -670,6 +979,7 @@ sap.ui.define([
                  
                 var d=oEvent;
                 var oTable=this.getView().byId("tablaImpuesto").getTable();
+                var params = this.byId("smart");
                 if(oTable)
                 {
                     var oBinding=oTable.getBinding("rows");
@@ -677,11 +987,26 @@ sap.ui.define([
                     {
                         var oFilter=oBinding.sFilterParams;
                         console.log(oFilter);
-                        this.onRellenarTabla(oFilter);
+                        if(this.getImpDifOri())
+                        {
+                            this.onRellenarTabla(oFilter);
+                        }
+                        else
+                        {
+                            if(this.byId("smart").getFilterData()["PtarifImp"])
+                            {
+                                this.onRellenarTabla(oFilter);
+                            }
+                            else
+                            {
+                                MessageBox.alert("Por favor ingresar Tarifa de impuesto");
+                                return;    
+                            }
+                        }
                     }
                     else
                     {
-                        var params = this.byId("smart");
+                        
                         params.search();
                     }
     
@@ -689,7 +1014,7 @@ sap.ui.define([
             },
             handleChange: function (oEvent) {
                 try {
-                    var oSmartFilterBar = oEvent.getSource();               
+                    var oSmartFilterBar = oEvent.getSource();      
                     var filterChanged=oEvent.getParameters('value').getParameters().id;
                     if(oSmartFilterBar)
                     {
@@ -755,7 +1080,8 @@ sap.ui.define([
                                             return;    
                                         }
                                     }
-                                }      
+                                }
+                                /*      
                                 var sSelectedDate=filterData["Pfechcontrev"].ranges[0].value1;
                                 var oSelectedDate = this.stringToDate(sSelectedDate);
                                 var oToday = new Date();
@@ -773,6 +1099,7 @@ sap.ui.define([
                                     }; // Resetear el campo específico
                                     oSmartFilterBar.setFilterData(filterData,true);  // Aplicar los datos modificados
                                 } 
+                                    */
                             }
                             else if(filterChanged.includes("Pfechjobrev"))
                             {
@@ -789,7 +1116,60 @@ sap.ui.define([
                                         }; // Resetear el campo específico
                                         oSmartFilterBar.setFilterData(filterData,true); 
                                     }
+                                }
+                                if(filterData["Pfechcontrev"])
+                                {
+                                    
+                                        var oSelectedDate=this.stringToDate(filterData["Pfechjobrev"].ranges[0].value1);
+                                        var oSelectedDate2=this.stringToDate(filterData["Pfechcontrev"].ranges[0].value1);
+                                        if(oSelectedDate<oSelectedDate2)
+                                        {
+                                            MessageBox.alert("La Fecha de JOB de Reversión debe ser superior a La fecha de reversión de la contabilización");
+                                            filterData["Pfechjobrev"] = 
+                                                { items: [],
+                                                    ranges: [],
+                                                    value: null
+                                                }; // Resetear el campo específico
+                                                oSmartFilterBar.setFilterData(filterData,true); 
+                                        }
+                                    
                                 }  
+                            }
+                            else if(filterChanged.includes("Pbudat"))
+                            {
+                                if(filterData["Pfechcontrev"])
+                                {
+                                    let Pbudat=filterData["Pbudat"].ranges[0].value1;
+                                    let oPbudat=this.stringToDate(Pbudat);//new Date(Pbudat);
+                                    let sSelectedDate=filterData["Pfechcontrev"].ranges[0].value1;
+                                    let oSelectedDate = this.stringToDate(sSelectedDate);//new Date(sSelectedDate);
+                                    if(oPbudat>oSelectedDate)
+                                    {
+                                        MessageBox.alert("La fecha de reversión no puede ser menor que la fecha de contabilización");
+                                        filterData["Pbudat"] = 
+                                        { items: [],
+                                            ranges: [],
+                                            value: null
+                                        };
+                                        oSmartFilterBar.setFilterData(filterData,true);
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        if(!this.areDatesInDifferentMonths(oPbudat,oSelectedDate))
+                                        {
+                                            MessageBox.alert("La fecha de reversión debe estar en un mes distinto a la fecha de contabilización");
+                                            filterData["Pbudat"] = 
+                                            { items: [],
+                                                ranges: [],
+                                                value: null
+                                            };
+                                            oSmartFilterBar.setFilterData(filterData,true);
+                                            return;    
+                                        }
+                                    }     
+                                }
+                                
                             }
                         }
                     }    
@@ -814,6 +1194,146 @@ sap.ui.define([
                 
                 // Comparar si el año y el mes son distintos
                 return month1 !== month2;
+            },
+            formatBoolean: function(array)
+            {
+                if(array)
+                {
+                    if(array.items.length>0)
+                    {
+                        if(array.items[0].key)
+                        {
+                            return "X";
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                    else if(array.ranges.length>0)
+                    {
+                        if(array.ranges[0].value1)
+                        {
+                            return "X";
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                }
+                else
+                {
+                    return "";
+                }
+            },
+            setColumnsVisible: function(impOri)
+            {
+                if(impOri)
+                {
+                    this.byId("columnImpDif16").setVisible(true);
+                    this.byId("columnImpDif8").setVisible(false);
+                    this.byId("columnImpDif9").setVisible(false);
+                    this.byId("columnImpDif10").setVisible(false);
+                    this.byId("columnImpDif1").setVisible(false);
+                    this.byId("columnImpDif2").setVisible(false);
+                }
+                else
+                {
+                    this.byId("columnImpDif16").setVisible(false);
+                    this.byId("columnImpDif8").setVisible(true);
+                    this.byId("columnImpDif9").setVisible(true);
+                    this.byId("columnImpDif10").setVisible(true);
+                    this.byId("columnImpDif1").setVisible(true);
+                    this.byId("columnImpDif2").setVisible(true);
+                }
+            },
+            getImpDifOri: function()
+            {
+                var impOri;
+                var filterData=this.byId("smart").getFilterData();
+                if(filterData["ImpDifOri"])
+                {
+                    if(filterData.ImpDifOri.ranges.length>0)
+                    {
+                        impOri=filterData.ImpDifOri.ranges[0].value1
+                    }
+                    else
+                    {
+                        impOri=false;
+                    }
+                }
+                else
+                {
+                    impOri=false;
+                }
+                return impOri;
+            },
+            getLedgerBase:function()
+            {
+                var filterData=this.byId("smart").getFilterData();
+                if(filterData["Brldnr"])
+                {
+                    if(filterData.Brldnr.items.length>0)
+                        {
+                            return " -"+filterData.Brldnr.items[0].key;
+                        }
+                    else if(filterData.Brldnr.ranges.length>0)
+                    {
+                        return " -"+filterData.Brldnr.ranges[0].value1
+                    }
+                    else
+                    {
+                        return "";
+                    }   
+                }
+                else
+                {
+                    return "";
+                }
+            },
+            getLedgerComparativo:function()
+            {
+                var filterData=this.byId("smart").getFilterData();
+                if(filterData["Prldnr"])
+                {
+                    if(filterData.Prldnr.items.length>0)
+                        {
+                            return " -"+filterData.Prldnr.items[0].key;
+                        }
+                    else if(filterData.Prldnr.ranges.length>0)
+                    {
+                        return " -"+filterData.Prldnr.ranges[0].value1
+                    }
+                    else
+                    {
+                        return "";
+                    }   
+                }
+                else
+                {
+                    return "";
+                }
+            },
+            formatBoolean2: function(array)
+            {
+               if(array)
+                {
+                    if(array.ranges.length>0)
+                        {
+                            if(array.ranges[0].value1)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        else{
+                            return false;
+                        }
+                }     
             }
         });
     });

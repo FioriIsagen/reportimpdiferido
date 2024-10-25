@@ -18,7 +18,7 @@
                         <smart:ControlConfiguration id="control6" controlType="input" mandatory="mandatory"  key="Pbfrper" label="Mes Inicial"/>
                         <smart:ControlConfiguration id="control7" controlType="input" mandatory="mandatory"  key="Pbtoper" label="Mes Fin"/>
                         <smart:ControlConfiguration id="control8" mandatory="mandatory" key="Pcini" label="Cuentas"/>
-                        <smart:ControlConfiguration id="control9" controlType="input" mandatory="mandatory" hasValueHelpDialog="false" key="PtarifImp" label="Tarifa Impuesto"/>
+                        <smart:ControlConfiguration id="control9" controlType="input" hasValueHelpDialog="false" key="PtarifImp" label="Tarifa Impuesto"/>
                         <smart:ControlConfiguration id="control10" key="Pbudat" label="Fecha de Contabilización"/>                        
                         <smart:ControlConfiguration id="control11" key="Pfechcontrev" label="Fecha de Cont. de Reversión"/>
                         <smart:ControlConfiguration id="control12" mandatory="mandatory" key="Preversar" label="Reversar Contabilización?"/>
@@ -36,7 +36,7 @@
 			</smartTable:SmartTable>
              <MessageStrip id="Messg1" text="test" type="Warning" showIcon="true" visible="false" showCloseButton="true" class="sapUiNoMarginTop sapUiNoMarginEnd"/>
 
-            <Panel id="panelTablaImpuestoDiferido">
+            <Panel id="panelTablaImpuestoDiferido" visible="false">
                 <Toolbar id="h" visible="true">
                     <ToolbarSpacer id="hh"/>
                     <Button text="Descargar a Excel" visible="false" press="onExport" id="btnExcel" icon="sap-icon://excel-attachment" />
@@ -93,13 +93,13 @@
                                 <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp8}"/>
                             </header>
                         </Column>
-                        <Column id="columnImpDif9" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <Column id="columnImpDif9" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" >
                             <header>
                                 <Text id="textImpDif9" text="{i18n>titTablaImp9}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp9}"/>
                             </header>
                         </Column>
-                        <Column id="columnImpDif10" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <Column id="columnImpDif10" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false" >
                             <header>
                                 <Text id="textImpDif10" text="{i18n>titTablaImp10}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp10}"/>
@@ -135,6 +135,12 @@
                                 <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp15}"/>
                             </header>
                         </Column>
+                        <Column id="columnImpDif16" width="100px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                            <header>
+                                <Text id="textImpDif16" text="{i18n>titTablaImp16}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <FormattedText htmlText="&lt;strong&gt;{i18n>titTablaImp16}"/>
+                            </header>
+                        </Column>
                     </columns>
                     <items>
                         <ColumnListItem vAlign="Middle" id="itemsTablaImp">
@@ -157,6 +163,7 @@
                                 <Text id="textImpresul13" text="{modelo4>TipoImp}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 <Text id="textImpresul14" text="{modelo4>aprobador}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                 <Text id="textImpresul15" text="{modelo4>aprobador}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <Text id="textImpresul16" text="{modelo4>Contrapartida}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                             </cells>
                         </ColumnListItem>
                     </items>
