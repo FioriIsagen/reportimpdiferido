@@ -67,55 +67,6 @@ sap.ui.define([
                     console.error("El SmartFilterBar no pudo ser encontrado con el ID proporcionado.");
                 } 
             },
-            onSeleccionMes: function (mes) {
-                let mesSeleccionado
-                switch (mes) {
-                    case "0":
-                        mesSeleccionado = "Mes Cero"
-                        break;
-                    case "1":
-                        mesSeleccionado = "Enero"
-                        break;
-                    case "2":
-                        mesSeleccionado = "Febrero"
-                        break;
-                    case "3":
-                        mesSeleccionado = "Marzo"
-                        break;
-                    case "4":
-                        mesSeleccionado = "Abril"
-                        break;
-                    case "5":
-                        mesSeleccionado = "Mayo"
-                        break;
-                    case "6":
-                        mesSeleccionado = "Junio"
-                        break;
-                    case "7":
-                        mesSeleccionado = "Julio"
-                        break;
-                    case "8":
-                        mesSeleccionado = "Agosto"
-                        break;
-                    case "9":
-                        mesSeleccionado = "Septiembre"
-                        break;
-                    case "10":
-                        mesSeleccionado = "Octubre"
-                        break;
-                    case "11":
-                        mesSeleccionado = "Noviembre"
-                        break;
-                    case "12":
-                        mesSeleccionado = "Diciembre"
-                        break;
-                    default:
-                        break;
-                }
-
-                return mesSeleccionado;
-
-            },
             onRellenarTabla: function (sFilter) {
 
 
@@ -392,46 +343,6 @@ sap.ui.define([
                     }
                 });
             },
-            /*
-            onExport: function () {
-                var aCols, oRowBinding, oSettings, oSheet, oTable;
-
-                if (!this._oTable) {
-                    this._oTable = this.byId("tablaImpuestoDiferido");
-                }
-
-                oTable = this._oTable;
-                oRowBinding = oTable.getBinding("items");
-                aCols = this.createColumnConfig();
-
-                oSettings = {
-                    workbook: {
-                        columns: aCols,
-                        hierarchyLevel: "Level"
-                    },
-                    dataSource: oRowBinding,
-                    fileName: "Impuesto Diferido.xlsx",
-                    worker: false, // We need to disable worker because we are using a MockServer as OData Service
-                    onBeforeExport: function (oEvent) {
-                        var oSheet = oEvent.getParameter("exportSettings").workbook.getWorksheet(0);
-                        var aRows = oSheet.getRows();
-
-                        aRows.forEach(function (oRow) {
-                            oRow.eachCell({ includeEmpty: true }, function (cell, colNumber) {
-                                var value = cell.value;
-                                if (value === true || value === "true") {
-                                    cell.value = "X";
-                                }
-                            });
-                        });
-                    }
-                };
-
-                oSheet = new Spreadsheet(oSettings);
-                oSheet.build().finally(function () {
-                    oSheet.destroy();
-                });
-            },*/
             onExport: function () {
                 var aCols, oRowBinding, oSettings, oSheet, oTable;
                 var oController = this;
@@ -750,22 +661,25 @@ sap.ui.define([
                     property: "Diferencia",
                     type: EdmType.String
                 });
-
-                aCols.push({
-                    label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp8"), //este es checkbox
-                    property: "Permanente",
-                    type: EdmType.boolean
-                });
-                aCols.push({
-                    label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp9"), //este es checkbox
-                    property: "Imponible",
-                    type: EdmType.Boolean
-                });
-                aCols.push({
-                    label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp10"), //este es checkbox
-                    property: "Deducible",
-                    type: EdmType.Boolean
-                });
+                if(!this.getImpDifOri())
+                {
+                    aCols.push({
+                        label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp8"), //este es checkbox
+                        property: "Permanente",
+                        type: EdmType.boolean
+                    });
+                    aCols.push({
+                        label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp9"), //este es checkbox
+                        property: "Imponible",
+                        type: EdmType.Boolean
+                    });
+                    aCols.push({
+                        label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp10"), //este es checkbox
+                        property: "Deducible",
+                        type: EdmType.Boolean
+                    });
+                }    
+                
                 aCols.push({
                     label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp11"),
                     property: "TarifaImp",
@@ -781,6 +695,14 @@ sap.ui.define([
                     property: "TipoImp",
                     type: EdmType.String
                 });
+                if(this.getImpDifOri())
+                {
+                    aCols.push({
+                        label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp16"),
+                        property: "Contrapartida",
+                        type: EdmType.String
+                    });
+                }
                 aCols.push({
                     label: this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("titTablaImp17"),
                     property: "FechaEjecucion",
@@ -989,12 +911,18 @@ sap.ui.define([
                         console.log(oFilter);
                         if(this.getImpDifOri())
                         {
+                            if (oFilter.includes('ImpDifOri%20eq%20false')) {
+                                oFilter=oFilter.replace('false','true');
+                                }
                             this.onRellenarTabla(oFilter);
                         }
                         else
                         {
                             if(this.byId("smart").getFilterData()["PtarifImp"])
                             {
+                                if (oFilter.includes('ImpDifOri%20eq%20true')) {
+                                oFilter=oFilter.replace('true','false');
+                                }
                                 this.onRellenarTabla(oFilter);
                             }
                             else
