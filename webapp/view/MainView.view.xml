@@ -7,7 +7,7 @@
     
    <Page id="page" title="{i18n>title}">
             <content>
-                <smart:SmartFilterBar id="smart" entitySet="ZFI_IMPDIF_REP1Set" filterChange="handleChange" showMessages="true" enableBasicSearch="false" persistencyKey="UniqueAndStablePersistencyKey" search="onSearch">
+                <smart:SmartFilterBar id="smart" entitySet="ZFI_IMPDIF_REP1Set" filterChange="handleChange" showMessages="true" enableBasicSearch="false" persistencyKey="UniqueAndStablePersistencyKey" search="onSearch" afterVariantLoad="onAfterVariantLoad">
                   <smart:controlConfiguration>
                         
                         <smart:ControlConfiguration id="control1"  mandatory="mandatory" key="Pbukrs" label="Sociedad"/>

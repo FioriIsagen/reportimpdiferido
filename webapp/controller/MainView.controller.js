@@ -49,6 +49,7 @@ sap.ui.define([
             sFilter:"",
             contrapartida:"",
             bTarImp:true,
+            bFilterChanged:false,
 
             onInit: function () {
                 var that = this;
@@ -905,7 +906,7 @@ sap.ui.define([
                 if(oTable)
                 {
                     var oBinding=oTable.getBinding("rows");
-                    if(oBinding)
+                    if(oBinding&&!this.bFilterChanged)
                     {
                         var oFilter=oBinding.sFilterParams;
                         console.log(oFilter);
@@ -915,6 +916,7 @@ sap.ui.define([
                                 oFilter=oFilter.replace('false','true');
                                 }
                             this.onRellenarTabla(oFilter);
+                            this.bFilterChanged=false;
                         }
                         else
                         {
@@ -924,6 +926,7 @@ sap.ui.define([
                                 oFilter=oFilter.replace('true','false');
                                 }
                                 this.onRellenarTabla(oFilter);
+                                this.bFilterChanged=false;
                             }
                             else
                             {
@@ -934,7 +937,7 @@ sap.ui.define([
                     }
                     else
                     {
-                        
+                        this.bFilterChanged=false;
                         params.search();
                     }
     
@@ -942,6 +945,7 @@ sap.ui.define([
             },
             handleChange: function (oEvent) {
                 try {
+                    this.bFilterChanged=true;
                     var oSmartFilterBar = oEvent.getSource();      
                     var filterChanged=oEvent.getParameters('value').getParameters().id;
                     if(oSmartFilterBar)
@@ -1105,6 +1109,16 @@ sap.ui.define([
                     console.log(error);
                 }
                 
+            },
+            onAfterVariantLoad: function()
+            {
+                this.bFilterChanged=true;
+                var oSmartFilterBar = this.byId("smart");
+                if (oSmartFilterBar) {
+                    oSmartFilterBar.attachSearch(this.onSearch, this);                   
+                } else {
+                    console.error("El SmartFilterBar no pudo ser encontrado con el ID proporcionado.");
+                } 
             },
             stringToDate:  function (dateString) {
                 // Extraer el año, mes y día de la cadena
